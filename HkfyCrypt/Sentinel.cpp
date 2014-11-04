@@ -337,7 +337,7 @@ int  CSentinel::DecVendor()
 	string strEnc = rs.decrypt();
 
 	//3.0 加上特定的值修改原有数据
-	if (NULL == m_pCode)
+	if (NULL != m_pCode)
 	{
 		delete []m_pCode;
 		m_pCode = NULL;

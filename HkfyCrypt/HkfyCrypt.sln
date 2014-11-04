@@ -37,7 +37,7 @@ Global
 		{E6008CB2-9706-4F73-87C0-E3253845D925}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{E6008CB2-9706-4F73-87C0-E3253845D925}.Release|Win32.ActiveCfg = Release|Win32
 		{E6008CB2-9706-4F73-87C0-E3253845D925}.Release|Win32.Build.0 = Release|Win32
-		{E6008CB2-9706-4F73-87C0-E3253845D925}.Release|x64.ActiveCfg = Release|Win32
+		{E6008CB2-9706-4F73-87C0-E3253845D925}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
