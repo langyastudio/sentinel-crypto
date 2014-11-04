@@ -56,8 +56,8 @@ Rotation is separate from addition to prevent recomputation.
 	(a) += (b); \
 }
 
-const byte CMD5::PADDING[64] = { 0x80 };
-const char CMD5::HEX[16] = {
+const byte CRSA::PADDING[64] = { 0x80 };
+const char CRSA::HEX[16] = {
 	'0', '1', '2', '3',
 	'4', '5', '6', '7',
 	'8', '9', 'a', 'b',
@@ -65,30 +65,30 @@ const char CMD5::HEX[16] = {
 };
 
 /* Default construct. */
-CMD5::CMD5() {
+CRSA::CRSA() {
 	reset();
 }
 
 /* Construct a MD5 object with a input buffer. */
-CMD5::CMD5(const void* input, size_t length) {
+CRSA::CRSA(const void* input, size_t length) {
 	reset();
 	update(input, length);
 }
 
 /* Construct a MD5 object with a string. */
-CMD5::CMD5(const string& str) {
+CRSA::CRSA(const string& str) {
 	reset();
 	update(str);
 }
 
 /* Construct a MD5 object with a file. */
-CMD5::CMD5(ifstream& in) {
+CRSA::CRSA(ifstream& in) {
 	reset();
 	update(in);
 }
 
 /* Return the message-digest */
-const byte* CMD5::digest() {
+const byte* CRSA::digest() {
 	if (!_finished) {
 		_finished = true;
 		final();
@@ -98,7 +98,7 @@ const byte* CMD5::digest() {
 }
 
 /* Reset the calculate state */
-void CMD5::reset() {
+void CRSA::reset() {
 	_finished = false;
 	/* reset number of bits. */
 	_count[0] = _count[1] = 0;
@@ -110,17 +110,17 @@ void CMD5::reset() {
 }
 
 /* Updating the context with a input buffer. */
-void CMD5::update(const void* input, size_t length) {
+void CRSA::update(const void* input, size_t length) {
 	update((const byte*)input, length);
 }
 
 /* Updating the context with a string. */
-void CMD5::update(const string& str) {
+void CRSA::update(const string& str) {
 	update((const byte*)str.c_str(), str.length());
 }
 
 /* Updating the context with a file. */
-void CMD5::update(ifstream& in) {
+void CRSA::update(ifstream& in) {
 	if (!in) {
 		return;
 	}
@@ -145,7 +145,7 @@ void CMD5::update(ifstream& in) {
 operation, processing another message block, and updating the
 context.
 */
-void CMD5::update(const byte* input, size_t length)
+void CRSA::update(const byte* input, size_t length)
 {
 	uint32 i, index, partLen;
 	_finished = false;
@@ -182,7 +182,7 @@ void CMD5::update(const byte* input, size_t length)
 /* MD5 finalization. Ends an MD5 message-_digest operation, writing the
 the message _digest and zeroizing the context.
 */
-void CMD5::final() {
+void CRSA::final() {
 	byte bits[8];
 	uint32 oldState[4];
 	uint32 oldCount[2];
@@ -212,7 +212,7 @@ void CMD5::final() {
 }
 
 /* MD5 basic transformation. Transforms _state based on block. */
-void CMD5::transform(const byte block[64]) {
+void CRSA::transform(const byte block[64]) {
 	uint32 a = _state[0], b = _state[1], c = _state[2], d = _state[3], x[16];
 
 	decode(block, x, 64);
@@ -297,7 +297,7 @@ void CMD5::transform(const byte block[64]) {
 /* Encodes input (ulong) into output (byte). Assumes length is
 a multiple of 4.
 */
-void CMD5::encode(const uint32* input, byte* output, size_t length) {
+void CRSA::encode(const uint32* input, byte* output, size_t length) {
 	for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
 		output[j]= (byte)(input[i] & 0xff);
 		output[j + 1] = (byte)((input[i] >> 8) & 0xff);
@@ -309,7 +309,7 @@ void CMD5::encode(const uint32* input, byte* output, size_t length) {
 /* Decodes input (byte) into output (ulong). Assumes length is
 a multiple of 4.
 */
-void CMD5::decode(const byte* input, uint32* output, size_t length) {
+void CRSA::decode(const byte* input, uint32* output, size_t length) {
 	for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
 		output[i] = ((uint32)input[j]) | (((uint32)input[j + 1]) << 8) |
 			(((uint32)input[j + 2]) << 16) | (((uint32)input[j + 3]) << 24);
@@ -317,7 +317,7 @@ void CMD5::decode(const byte* input, uint32* output, size_t length) {
 }
 
 /* Convert byte array to hex string. */
-string CMD5::bytesToHexString(const byte* input, size_t length) {
+string CRSA::bytesToHexString(const byte* input, size_t length) {
 	string str;
 	str.reserve(length << 1);
 	for (size_t i = 0; i < length; ++i) {
@@ -331,6 +331,6 @@ string CMD5::bytesToHexString(const byte* input, size_t length) {
 }
 
 /* Convert digest to string value */
-string CMD5::toString() {
+string CRSA::toString() {
 	return bytesToHexString(digest(), 16);
 }

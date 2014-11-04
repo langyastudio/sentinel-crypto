@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Method">
+      <UniqueIdentifier>{00b3a2a6-b41d-43b1-9790-7b409515c945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Method">
+      <UniqueIdentifier>{81a1a922-6af1-4f39-ba27-977772be862b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TinyXML">
+      <UniqueIdentifier>{2d685ce8-6345-4e03-8ceb-7ff71d2659c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TinyXML">
+      <UniqueIdentifier>{43381f63-e166-44d7-8bbf-6d7ce6f1de70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sentinel">
+      <UniqueIdentifier>{4220e5c4-589d-4b43-9f95-ca18ab3e391b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sentinel">
+      <UniqueIdentifier>{99b18896-77b5-4178-b618-6fe693c8254e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,31 +42,85 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HkfyCryptAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MD5.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
+    <ClInclude Include="AES.h">
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
+    <ClInclude Include="DES.h">
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinyxml.h">
+      <Filter>Header Files\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Errorprinter.h">
+      <Filter>Header Files\Sentinel</Filter>
+    </ClInclude>
+    <ClInclude Include="Sentinel.h">
+      <Filter>Header Files\Sentinel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor_code.h">
+      <Filter>Header Files\Sentinel</Filter>
     </ClInclude>
     <ClInclude Include="Ci_HkfyCrypt.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HkfyCryptAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HDSerial.h">
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
+    <ClInclude Include="MacID.h">
+      <Filter>Header Files\Method</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="DES.cpp">
+      <Filter>Source Files\Method</Filter>
+    </ClCompile>
+    <ClCompile Include="MD5.cpp">
+      <Filter>Source Files\Method</Filter>
+    </ClCompile>
+    <ClCompile Include="AES.cpp">
+      <Filter>Source Files\Method</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp">
+      <Filter>Source Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxml.cpp">
+      <Filter>Source Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
+      <Filter>Source Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
+      <Filter>Source Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Errorprinter.cpp">
+      <Filter>Source Files\Sentinel</Filter>
+    </ClCompile>
+    <ClCompile Include="Sentinel.cpp">
+      <Filter>Source Files\Sentinel</Filter>
+    </ClCompile>
+    <ClCompile Include="Ci_HkfyCrypt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HkfyCryptAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MD5.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="HDSerial.cpp">
+      <Filter>Source Files\Method</Filter>
     </ClCompile>
-    <ClCompile Include="Ci_HkfyCrypt.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MacID.cpp">
+      <Filter>Source Files\Method</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

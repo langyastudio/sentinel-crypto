@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sentinel HASP cpp API", "libhasp_cpp_windows_msc7.vcproj", "{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug Diag LIBMT = Debug Diag LIBMT
+		Debug Diag LIBMTD = Debug Diag LIBMTD
+		Debug LIBMT = Debug LIBMT
+		Debug LIBMTD = Debug LIBMTD
+		Release LIBMT = Release LIBMT
+		Release LIBMTD = Release LIBMTD
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT.ActiveCfg = Debug Diag LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT.Build.0 = Debug Diag LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD.ActiveCfg = Debug Diag LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD.Build.0 = Debug Diag LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT.ActiveCfg = Debug LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT.Build.0 = Debug LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD.ActiveCfg = Debug LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD.Build.0 = Debug LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT.ActiveCfg = Release LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT.Build.0 = Release LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD.ActiveCfg = Release LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD.Build.0 = Release LIBMTD|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

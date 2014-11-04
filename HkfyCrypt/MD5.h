@@ -5,20 +5,17 @@
 #pragma once
 #endif//!_MSC_VER >= 1200
 
-#include <string>
-#include <fstream>
-using namespace std;
 
-typedef unsigned char byte;
-typedef unsigned int  uint32;
-
-class CMD5 
+//--------------------------------------------------------------------------
+//								MD5 Encrypt
+//--------------------------------------------------------------------------
+class CRSA 
 {
 public:
-	CMD5();
-	CMD5(const void* input, size_t length);
-	CMD5(const string& str);
-	CMD5(ifstream& in);
+	CRSA();
+	CRSA(const void* input, size_t length);
+	CRSA(const string& str);
+	CRSA(ifstream& in);
 
 public:
 	void update(const void* input, size_t length);
@@ -38,8 +35,8 @@ private:
 	string bytesToHexString(const byte* input, size_t length);
 
 	/* class uncopyable */
-	CMD5(const CMD5&);
-	CMD5& operator=(const CMD5&);
+	CRSA(const CRSA&);
+	CRSA& operator=(const CRSA&);
 
 private:
 	uint32 _state[4];   /* state (ABCD) */

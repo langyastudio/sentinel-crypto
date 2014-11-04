@@ -2,6 +2,8 @@
 #include "HkfyCryptAPI.h"
 #include "Ci_HkfyCrypt.h"
 
+#define  MD5_ENCRYPT_LEN	32+1	//文件的MD5的长度
+
 
 //Ansi字符串转Unicode字符串
 wchar_t* Ansi2Unicode(const char* szAnsi)  
@@ -43,7 +45,7 @@ char* Unicode2Ansi(const wchar_t* wszString)
 	return szAnsi;  
 }  
 
-HKFYCRYPT_EXPORTS_API int MD5_GetFile( TCHAR *pSorFilePath, TCHAR *pSzEncrypt, int len /*=MD5_ENCRYPT_LEN*/)
+int MD5_GetFile( TCHAR *pSorFilePath, TCHAR *pSzEncrypt, int len /*=MD5_ENCRYPT_LEN*/)
 {
 	if (NULL == pSorFilePath)
 	{
@@ -51,7 +53,7 @@ HKFYCRYPT_EXPORTS_API int MD5_GetFile( TCHAR *pSorFilePath, TCHAR *pSzEncrypt, i
 	}
 
 	ifstream ifStr(pSorFilePath);
-	Ci_MD5   iMD5(ifStr);
+	Ci_RSA   iMD5(ifStr);
 	string   str = iMD5.ToString();
 	
 	wchar_t* pszWStr =  Ansi2Unicode(str.c_str());
@@ -65,4 +67,42 @@ HKFYCRYPT_EXPORTS_API int MD5_GetFile( TCHAR *pSorFilePath, TCHAR *pSzEncrypt, i
 	delete []pszWStr;
 
 	return(S_OK);
+}
+
+//--------------------------------------------------------------------------
+//								Sentinel Encrypt
+//--------------------------------------------------------------------------
+CHKFY::CHKFY()
+{
+	m_pHKFY = new Ci_HKFY();
+}
+
+CHKFY::~CHKFY()
+{
+	delete m_pHKFY;
+}
+
+const char * CHKFY::GetErrorName( int errorCode )
+{
+	return(m_pHKFY->GetErrorName(errorCode));
+}
+
+int CHKFY::LogIn( unsigned long lFeatureId )
+{
+	return(m_pHKFY->LogIn(lFeatureId));
+}
+
+int CHKFY::LogOut()
+{
+	return(m_pHKFY->LogOut());
+}
+
+int CHKFY::CheckRom()
+{
+	return(m_pHKFY->CheckRom());
+}
+
+int CHKFY::CheckRam()
+{
+	return(m_pHKFY->CheckRam());
 }

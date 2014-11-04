@@ -1,0 +1,49 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sentinel LDK cpp API", "libhasp_cpp_windows_msc10.vcxproj", "{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Diag LIBMT|Win32 = Debug Diag LIBMT|Win32
+		Debug Diag LIBMT|x64 = Debug Diag LIBMT|x64
+		Debug Diag LIBMTD|Win32 = Debug Diag LIBMTD|Win32
+		Debug Diag LIBMTD|x64 = Debug Diag LIBMTD|x64
+		Debug LIBMT|Win32 = Debug LIBMT|Win32
+		Debug LIBMT|x64 = Debug LIBMT|x64
+		Debug LIBMTD|Win32 = Debug LIBMTD|Win32
+		Debug LIBMTD|x64 = Debug LIBMTD|x64
+		Release LIBMT|Win32 = Release LIBMT|Win32
+		Release LIBMT|x64 = Release LIBMT|x64
+		Release LIBMTD|Win32 = Release LIBMTD|Win32
+		Release LIBMTD|x64 = Release LIBMTD|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT|Win32.ActiveCfg = Debug Diag LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT|Win32.Build.0 = Debug Diag LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT|x64.ActiveCfg = Debug Diag LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMT|x64.Build.0 = Debug Diag LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD|Win32.ActiveCfg = Debug Diag LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD|Win32.Build.0 = Debug Diag LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD|x64.ActiveCfg = Debug Diag LIBMTD|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug Diag LIBMTD|x64.Build.0 = Debug Diag LIBMTD|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT|Win32.ActiveCfg = Debug LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT|Win32.Build.0 = Debug LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT|x64.ActiveCfg = Debug LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMT|x64.Build.0 = Debug LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD|Win32.ActiveCfg = Debug LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD|Win32.Build.0 = Debug LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD|x64.ActiveCfg = Debug LIBMTD|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Debug LIBMTD|x64.Build.0 = Debug LIBMTD|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT|Win32.ActiveCfg = Release LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT|Win32.Build.0 = Release LIBMT|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT|x64.ActiveCfg = Release LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMT|x64.Build.0 = Release LIBMT|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD|Win32.ActiveCfg = Release LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD|Win32.Build.0 = Release LIBMTD|Win32
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD|x64.ActiveCfg = Release LIBMTD|x64
+		{84FBCE09-311A-4F9E-814F-28DE0AF97B0D}.Release LIBMTD|x64.Build.0 = Release LIBMTD|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

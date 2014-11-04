@@ -5,28 +5,48 @@
 #pragma once
 #endif //!_MSC_VER >= 1200
 
-#include <string>
-#include <fstream>
-using namespace std;
 
 //--------------------------------------------------------------------------
 //								MD5 Encrypt
 //--------------------------------------------------------------------------
-typedef	class CMD5 *PCMD5;
-class Ci_MD5 
+typedef	class CRSA *PCRSA;
+class Ci_RSA 
 {
 public:
-	Ci_MD5(const void* input, size_t length);
-	Ci_MD5(const string& str);
-	Ci_MD5(ifstream& in);
-	~Ci_MD5();
+	Ci_RSA(const void* input, size_t length);
+	Ci_RSA(const string& str);
+	Ci_RSA(ifstream& in);
+	~Ci_RSA();
 
 public:
 	const byte* Digest();
 	string		ToString();
 
 private:
-	PCMD5	m_pMD5;
+	PCRSA	m_pMD5;
+};
+
+//--------------------------------------------------------------------------
+//								Sentinel Encrypt
+//--------------------------------------------------------------------------
+typedef class CSentinel  *PCSENTINEL;
+class Ci_HKFY
+{
+public:
+	Ci_HKFY();
+	~Ci_HKFY();
+
+public:
+	const char *GetErrorName(int errorCode);
+
+	int  LogIn(unsigned long lFeatureId);
+	int  LogOut();
+
+	int  CheckRom();
+	int  CheckRam();
+
+private:
+	PCSENTINEL	m_pSentinel;
 };
 
 

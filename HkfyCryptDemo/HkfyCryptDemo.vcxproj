@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{19C504DC-0EC3-4C9C-A10A-17B2054F46B4}</ProjectGuid>
+    <ProjectGuid>{E6008CB2-9706-4F73-87C0-E3253845D925}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>HkfyCryptDemo</RootNamespace>
   </PropertyGroup>
@@ -71,14 +71,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>D:\Code\Internet\HkfyCrypt\Bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>D:\Code\Internet\HkfyCrypt\Bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

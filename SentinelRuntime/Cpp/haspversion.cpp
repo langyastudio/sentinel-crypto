@@ -1,0 +1,118 @@
+////////////////////////////////////////////////////////////////////
+// Copyright (C) 2010, SafeNet, Inc. All rights reserved.
+//
+// HASP(R) is a registered trademark of SafeNet, Inc. 
+//
+//
+// $Id: haspversion.cpp,v 1.7 2010-06-08 05:28:56 pwang Exp $
+////////////////////////////////////////////////////////////////////
+#include "hasp_api_cpp_.h"
+
+
+////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+////////////////////////////////////////////////////////////////////
+
+ChaspVersion::ChaspVersion()
+    : m_nMajorVersion(0),
+      m_nMinorVersion(0),
+      m_nServerBuild(0),
+      m_nBuildNumber(0)
+{
+}
+
+ChaspVersion::ChaspVersion(const ChaspVersion& version)
+    : m_nMajorVersion(0),
+      m_nMinorVersion(0),
+      m_nServerBuild(0),
+      m_nBuildNumber(0)
+{
+    *this = version;
+}
+
+ChaspVersion::ChaspVersion(unsigned int nMajorVersion, 
+                           unsigned int nMinorVersion,
+                           unsigned int nServerBuild, 
+                           unsigned int nBuildNumber)
+    : m_nMajorVersion(nMajorVersion), 
+      m_nMinorVersion(nMinorVersion), 
+      m_nServerBuild(nServerBuild), 
+      m_nBuildNumber(nBuildNumber)
+{
+}
+
+ChaspVersion::~ChaspVersion()
+{
+}
+
+////////////////////////////////////////////////////////////////////
+// Implementation
+////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+ChaspVersion& ChaspVersion::operator=(const ChaspVersion& version)
+{
+    if (this != &version)
+    {
+        m_nMajorVersion = version.majorVersion();
+        m_nMinorVersion = version.minorVersion();
+        m_nServerBuild = version.serverBuild();
+        m_nBuildNumber = version.buildNumber();
+    }
+
+    return *this;
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+bool ChaspVersion::operator==(const ChaspVersion& version) const
+{
+    return (this == &version) ||
+           ((majorVersion() == version.majorVersion()) &&
+            (minorVersion() == version.minorVersion()) &&
+            (serverBuild() == version.serverBuild()) &&
+            (buildNumber() ==  version.buildNumber()));
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+bool ChaspVersion::operator!=(const ChaspVersion& version) const
+{
+    return !(*this == version);
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+unsigned int ChaspVersion::majorVersion() const
+{
+    return m_nMajorVersion;
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+unsigned int ChaspVersion::minorVersion() const
+{
+    return m_nMinorVersion;
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+unsigned int ChaspVersion::serverBuild() const
+{
+    return m_nServerBuild;
+}
+
+////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////
+unsigned int ChaspVersion::buildNumber() const
+{
+    return m_nBuildNumber;
+}

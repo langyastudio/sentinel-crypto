@@ -1,14 +1,36 @@
 #include "stdafx.h"
 #include "HkfyCryptAPI.h"
 
-#pragma comment(lib, "../bin/HkfyCrypt.lib")
+#pragma comment(lib, "HkfyCrypt.lib")
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	TCHAR szEncrypt[33] = {0};
 
-	MD5_GetFile(L"C:\\Users\\Administrator\\Desktop\\12.txt", szEncrypt, 33);
 
+	CHKFY crypt;
+
+	int  statue = crypt.LogIn(2);
+	if (statue != 0)
+	{
+	goto END;
+	}
+
+	statue = crypt.CheckRam();
+	if (statue != 0)
+	{
+	goto END;
+	}
+
+	statue = crypt.CheckRom();
+	if (statue != 0)
+	{
+	goto END;
+	}
+	
+END:
 	return 0;
 }
+
+
 
