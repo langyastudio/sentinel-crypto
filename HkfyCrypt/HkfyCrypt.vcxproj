@@ -71,12 +71,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)SentinelLib\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)SentinelLib\;$(LibraryPath)</LibraryPath>
-    <OutDir>D:\Code\Internet\HkfyCrypt\Bin\</OutDir>
+    <OutDir>D:\HkfyLib\Dll</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)SentinelLib\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)SentinelLib\;$(LibraryPath)</LibraryPath>
-    <OutDir>D:\Code\Internet\HkfyCrypt\Bin\</OutDir>
+    <OutDir>D:\HkfyLib\Dll</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,9 +108,8 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)HkfyCryptAPI.h  $(OutDir) /Y
-xcopy $(OutDir)HkfyCryptAPI.h  D:\Code\Internet\HkfyCrypt\HkfyCryptDemo\    /Y
-xcopy $(OutDir)HkfyCrypt.lib    D:\Code\Internet\HkfyCrypt\HkfyCryptDemo\   /Y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -158,9 +157,8 @@ xcopy $(OutDir)HkfyCrypt.lib    D:\Code\Internet\HkfyCrypt\HkfyCryptDemo\   /Y</
       </AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)HkfyCryptAPI.h  $(OutDir) /Y
-xcopy $(OutDir)HkfyCryptAPI.h  D:\Code\Internet\HkfyCrypt\HkfyCryptDemo\    /Y
-xcopy $(OutDir)HkfyCrypt.lib    D:\Code\Internet\HkfyCrypt\HkfyCryptDemo\   /Y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>

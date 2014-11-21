@@ -45,6 +45,8 @@ public:
 	int  CheckRom();
 	int  CheckRam();
 
+	int  GetPointNum();
+
 private:
 	PCSENTINEL	m_pSentinel;
 };

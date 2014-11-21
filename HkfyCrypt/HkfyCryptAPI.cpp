@@ -106,3 +106,9 @@ int CHKFY::CheckRam()
 {
 	return(m_pHKFY->CheckRam());
 }
+
+int CHKFY::GetPointNum()
+{
+	return(m_pHKFY->GetPointNum());
+}
+

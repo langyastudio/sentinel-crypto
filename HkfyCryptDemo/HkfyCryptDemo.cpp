@@ -24,6 +24,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		goto END;
 	}
+
+	statue = crypt.GetPointNum();
 	
 END:
 	return 0;

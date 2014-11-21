@@ -14,6 +14,7 @@ CSentinel::CSentinel()
 	m_pChasp = HASP_INVALID_HANDLE_VALUE;
 	m_pError = new CErrorPrinter();
 	m_pCode  = NULL;
+	m_pChannels = 0;
 }
 
 CSentinel::~CSentinel()
@@ -154,6 +155,15 @@ int CSentinel::CheckRom()
 		goto END;
 	}
 
+	//7.0 采样的通道数 0x0020-0x0020 1 通道数
+	{		
+		m_pChannels = (*(data + 0x0020) - 'a');
+		if (0x000A != m_pChannels) //有效的为10通道
+		{
+			m_pChannels = 0x0006;
+		}
+	}
+
 END:
 	return(status);
 }
@@ -242,9 +252,10 @@ int  CSentinel::CheckRam()
 		{
 			goto END;
 		}	
-		if (num < 1)
+		if (num < 1 || num > 5) //使用完毕
 		{
 			status = HASP_MEM_RANGE;
+			goto END;
 		}
 
 		//5.12 比较加密后的【机器码】
@@ -260,12 +271,12 @@ int  CSentinel::CheckRam()
 		//比较失败
 		if (ix >= num)
 		{
-			if (num == 5) //表示5个机器码使用完毕
+			if (num == 5) //使用完毕
 			{
 				status = HASP_MEM_RANGE;
 				goto END;
 			}
-			else //新增一个机器码
+			//新增一个机器码
 			{
 				//【机器的数目】加密
 				szDesDecNum[3] += 1; //机器的数目加1 
@@ -311,6 +322,12 @@ END:
 		pMachineData = NULL;
 	}
 	return(status);
+}
+
+// 采集的通道数
+int  CSentinel::GetPointNum()
+{
+	return(m_pChannels);
 }
 
 //开发商代码的长度为 984 
