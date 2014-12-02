@@ -115,21 +115,21 @@ int CSentinel::CheckRom()
 	//3.0 判断产品信息 0x0065-0x006F 11 HKFY_AUSKAR
 	if(memcmp(data+0x0065, "HKFY_AUSKAR", 11) != 0)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_PRODUCT_INFO;
 		goto END;
 	}
 
 	//4.0 判断版本信息 0x0062-0x0064 3 1.0
 	if(memcmp(data+0x0062, "1.0", 3) != 0)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_VERSION_INFO;
 		goto END;
 	}
 
 	//5.0 开发号信息 0x0058-0x0060 9 QMBECHKFY 
 	if(memcmp(data+0x0058, "QMBECHKFY", 9) != 0)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_DEVELOP_INFO;
 		goto END;
 	}
 	
@@ -151,7 +151,7 @@ int CSentinel::CheckRom()
 
 	if (memcmp(szSorData, data+0x0023, 30) != 0)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_ERR_ENCRYPT_DATA_OF_ROM;
 		goto END;
 	}
 
@@ -254,7 +254,7 @@ int  CSentinel::CheckRam()
 		}	
 		if (num < 1 || num > 5) //使用完毕
 		{
-			status = HASP_MEM_RANGE;
+			status = HASP_ERR_MACHINENUM;
 			goto END;
 		}
 
@@ -273,7 +273,7 @@ int  CSentinel::CheckRam()
 		{
 			if (num == 5) //使用完毕
 			{
-				status = HASP_MEM_RANGE;
+				status = HASP_MACHINENUM_OUT_OF_BOUNDS;
 				goto END;
 			}
 			//新增一个机器码
@@ -413,7 +413,7 @@ int  CSentinel::GetHLInfo(string &strHLId,  string &strHLType)
 	//解析
 	if (!xmlDoc.Parse(info, NULL, TIXML_ENCODING_UNKNOWN))
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_HLID;
 		goto END;
 	}
 	
@@ -421,14 +421,14 @@ int  CSentinel::GetHLInfo(string &strHLId,  string &strHLType)
 	const TiXmlElement* pRootElem = xmlDoc.RootElement();
 	if (NULL == pRootElem)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_HLID;
 		goto END;
 	}
 
 	const TiXmlNode* pChild = pRootElem->FirstChild();
 	if (NULL == pChild)
 	{
-		status = HASP_MEM_RANGE;
+		status = HASP_INV_HLID;
 		goto END;
 	}
 	if ( pChild->Type() == TiXmlNode::ELEMENT &&  0 == strcmp(pChild->Value(),"hasp") )
@@ -502,7 +502,7 @@ int  CSentinel::DecMachineNum(unsigned char szSorMachine[16], unsigned char szDe
 	//第四个为目前使用的数目
 	if (isdigit(szDesMachine[3]) == 0)  //第三位索引号为实际使用的机器的数目
 	{
-		status = HASP_ENC_NOT_SUPP;
+		status = HASP_ERR_MACHINENUM;
 		goto END;
 	}
 
@@ -519,7 +519,7 @@ int  CSentinel::DecMachineNum(unsigned char szSorMachine[16], unsigned char szDe
 	case '8':	num = 8;  break;
 	case '9':	num = 9;  break;
 	default:
-		status = HASP_ENC_NOT_SUPP;
+		status = HASP_ERR_MACHINENUM;
 		break;
 	}
 

@@ -501,6 +501,28 @@ enum hasp_error_codes
 
 
     HASP_NEXT_FREE_VALUES = 7001,
+
+	//自己新增的ErrorCode
+	/* Error Machine Num */
+	HASP_ERR_MACHINENUM = 7002,
+
+	/* Machine Num more than five */
+	HASP_MACHINENUM_OUT_OF_BOUNDS = 7003,
+
+	/* Error product info */
+	HASP_INV_PRODUCT_INFO = 7004,
+
+	/* Error Version info */
+	HASP_INV_VERSION_INFO = 7005,
+
+	/* Error the Develop of No */
+	HASP_INV_DEVELOP_INFO = 7006,
+
+	/* Error Encrypt data of ROM */
+	HASP_ERR_ENCRYPT_DATA_OF_ROM = 7007,
+
+	/* Error HL ID */
+	HASP_INV_HLID = 7008,
 };
 
 /**

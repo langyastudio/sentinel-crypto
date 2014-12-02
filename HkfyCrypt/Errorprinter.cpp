@@ -81,6 +81,15 @@ CErrorPrinter::CErrorPrinter()
 
     errorMap.insert(StatusMap::value_type(HASP_NOT_IMPL, "Capability isn't available" ));
     errorMap.insert(StatusMap::value_type(HASP_INT_ERR, "Internal API error" ));
+
+	// 自己新增的ErrorCode
+	errorMap.insert(StatusMap::value_type(HASP_ERR_MACHINENUM, "Error Machine Num" ));
+	errorMap.insert(StatusMap::value_type(HASP_MACHINENUM_OUT_OF_BOUNDS, "Machine Num More Than Five" ));
+	errorMap.insert(StatusMap::value_type(HASP_INV_PRODUCT_INFO, "Error Product Info" ));
+	errorMap.insert(StatusMap::value_type(HASP_INV_VERSION_INFO, "Error Version Info" ));
+	errorMap.insert(StatusMap::value_type(HASP_INV_DEVELOP_INFO, "Error The Develop Of No" ));
+	errorMap.insert(StatusMap::value_type(HASP_ERR_ENCRYPT_DATA_OF_ROM, "Error Encrypt Data Of ROM" ));
+	errorMap.insert(StatusMap::value_type(HASP_INV_HLID, "Error HL ID" ));
 }
 
 void CErrorPrinter::PrintError(hasp_status_t status)
