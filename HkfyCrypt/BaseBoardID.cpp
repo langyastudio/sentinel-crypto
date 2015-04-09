@@ -1,17 +1,15 @@
 #include "stdafx.h"
-#include "MacID.h"
+#include "BaseBoard.h"
 
-#pragma warning(once : 4267)
 
 //--------------------------------------------------------------
-//						网卡MAC地址
+//						主板序列号 -- 获取不到时为 None
 //--------------------------------------------------------------
-BOOL GetMacByCmd(char *lpszMac, int len/*=128*/)
+BOOL GetBaseBoardByCmd(char *lpszBaseBoard, int len/*=128*/)
 {	
-	const long MAX_COMMAND_SIZE = 10000; //命令行输出缓冲大小	
-	WCHAR szFetCmd[]			= L"ipconfig /all"; //获取MAC命令行	
-	const string strEnSearch = "Physical Address. . . . . . . . . : "; //网卡MAC地址的前导信息
-	const string strChSearch = "物理地址. . . . . . . . . . . . . : ";
+	const long MAX_COMMAND_SIZE = 10000; // 命令行输出缓冲大小	
+	WCHAR szFetCmd[]			= L"wmic BaseBoard get SerialNumber"; // 获取主板序列号命令行	
+	const string strEnSearch = "SerialNumber"; // 主板序列号的前导信息
 	
 	BOOL   bret		  = FALSE;
 	HANDLE hReadPipe  = NULL; //读取管道
@@ -20,7 +18,7 @@ BOOL GetMacByCmd(char *lpszMac, int len/*=128*/)
 	STARTUPINFO			si;	  //控制命令行窗口信息
 	SECURITY_ATTRIBUTES sa;   //安全属性
 
-	char			szBuffer[MAX_COMMAND_SIZE+1] = {0}; //放置命令行结果的输出缓冲区
+	char			szBuffer[MAX_COMMAND_SIZE+1] = {0}; // 放置命令行结果的输出缓冲区
 	string			strBuffer;
 	unsigned long	count = 0;
 	long			ipos  = 0;
@@ -65,43 +63,33 @@ BOOL GetMacByCmd(char *lpszMac, int len/*=128*/)
 		goto END;
 	}
 
-	//5.0 查找MAC地址，默认查找第一个,一般为以太网的MAC
+	//5.0 查找主板序列号
 	bret = FALSE;
 	strBuffer = szBuffer;
 	ipos = strBuffer.find(strEnSearch);
 
-	if (ipos < 0)//区分中英文的系统
+	if (ipos < 0) // 没有找到
 	{		
-		ipos = strBuffer.find(strChSearch);
-		if (ipos < 1)
-		{
-			goto END;
-		}
-		//提取MAC地址串
-		strBuffer = strBuffer.substr(ipos+strChSearch.length());
+	    goto END;
 	}
 	else
 	{
-		//提取MAC地址串
 		strBuffer = strBuffer.substr(ipos+strEnSearch.length());
-	}
-			
-	ipos = strBuffer.find("\r\n");
-	strBuffer = strBuffer.substr(0, ipos);	
+	}	
 
 	memset(szBuffer, 0x00, sizeof(szBuffer));
 	strcpy_s(szBuffer, strBuffer.c_str());
 
-	//去掉中间的“00-50-EB-0F-27-82”中间的'-'得到0050EB0F2782
-	int j = 0;
-	for(int i=0; i<strlen(szBuffer); i++)
-	{
-		if(szBuffer[i] != '-')
-		{
-			lpszMac[j] = szBuffer[i];
-			j++;
-		}
-	}
+    //去掉中间的空格 \r \n
+    int j = 0;
+    for (int i = 0; i < strlen(szBuffer); i++)
+    {
+        if (szBuffer[i] != ' ' && szBuffer[i] != '\n' && szBuffer[i] != '\r')
+        {
+            lpszBaseBoard[j] = szBuffer[i];
+            j++;
+        }
+    }
 
 	bret = TRUE;
 

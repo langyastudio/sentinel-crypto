@@ -5,8 +5,12 @@
 #include "MD5.h"
 #include "DES.h"
 #include "AES.h"
-#include "HDSerial.h"
 #include "MacID.h"
+#include "BaseBoard.h"
+#include "CpuID.h"
+
+#pragma  warning(once : 4267 4129)
+#define  HASP_MAX_MACHINE_NUM   5  // 最大的机器码的数目
 
 
 CSentinel::CSentinel()
@@ -43,9 +47,8 @@ int CSentinel::LogIn( unsigned long lFeatureId )
 {
 	if (NULL == m_pCode)
 	{
-		DecVendor();
+		DecVendor(); // 获取开发商代码
 	}
-
 	LogOut();	
 
 	//1.0 功能ID
@@ -78,11 +81,12 @@ int CSentinel::LogOut()
 	return(status);
 }
 
+// 检测固定内存
 int CSentinel::CheckRom()
 {
 	if (HASP_INVALID_HANDLE_VALUE == m_pChasp)
 	{
-		return(HASP_STATUS_OK);
+        return(HASP_INV_PROGNUM_OPT);
 	}
 	
 	hasp_size_t   size		= 0; //内存的尺寸
@@ -93,40 +97,38 @@ int CSentinel::CheckRom()
 
 	//1.0 获取只读内存的尺寸，判断是否为 112
 	status = hasp_get_size(m_pChasp, HASP_FILEID_RO, &size);
-
 	if (status != HASP_STATUS_OK)
 	{
 		goto END;
 	}
 	if (size != HASP_ROM_LEN)
 	{
-		status = HASP_MEM_RANGE;
+        status = HASP_INV_ROM_LEN;
 		goto END;
 	}
 
 	//2.0 获取只读的内存数据
 	status = hasp_read(m_pChasp, HASP_FILEID_RO, 0, size, data);
-
 	if (status != HASP_STATUS_OK)
 	{
 		goto END;
 	}
 
-	//3.0 判断产品信息 0x0065-0x006F 11 HKFY_AUSKAR
+	//3.0 判断产品信息 0x0065-0x006F  11  HKFY_AUSKAR
 	if(memcmp(data+0x0065, "HKFY_AUSKAR", 11) != 0)
 	{
 		status = HASP_INV_PRODUCT_INFO;
 		goto END;
 	}
 
-	//4.0 判断版本信息 0x0062-0x0064 3 1.0
+	//4.0 判断版本信息 0x0062-0x0064  3  1.0
 	if(memcmp(data+0x0062, "1.0", 3) != 0)
 	{
 		status = HASP_INV_VERSION_INFO;
 		goto END;
 	}
 
-	//5.0 开发号信息 0x0058-0x0060 9 QMBECHKFY 
+	//5.0 开发号信息 0x0058-0x0060 9  QMBECHKFY 
 	if(memcmp(data+0x0058, "QMBECHKFY", 9) != 0)
 	{
 		status = HASP_INV_DEVELOP_INFO;
@@ -158,7 +160,7 @@ int CSentinel::CheckRom()
 	//7.0 采样的通道数 0x0020-0x0020 1 通道数
 	{		
 		m_pChannels = (*(data + 0x0020) - 'a');
-		if (0x000A != m_pChannels) //有效的为10通道
+		if (0x000A != m_pChannels) // 有效的为10通道
 		{
 			m_pChannels = 0x0006;
 		}
@@ -168,17 +170,18 @@ END:
 	return(status);
 }
 
+// 检测可读写内存
 int  CSentinel::CheckRam()
 {
 	if (HASP_INVALID_HANDLE_VALUE == m_pChasp)
 	{
-		return(HASP_STATUS_OK);
+        return(HASP_INV_PROGNUM_OPT);
 	}
 
 	hasp_size_t   size		= 0; //内存的尺寸
 	hasp_status_t status	= HASP_STATUS_OK;
 	unsigned char data[HASP_RAM_LEN] = {0};
-	string		  strMachineCode;	   //机器码
+	string		  strMachineCode;	   // 机器码
 	int           iMachineCodeLen = 0;
 	char		  *pMachineData	  = NULL;
 	
@@ -188,10 +191,9 @@ int  CSentinel::CheckRam()
 	{
 		goto END;
 	}
-
 	if (size != HASP_RAM_LEN)
 	{
-		status = HASP_MEM_RANGE;
+        status = HASP_INV_RAM_LEN;
 		goto END;
 	}
 
@@ -202,15 +204,15 @@ int  CSentinel::CheckRam()
 		goto END;
 	}
 
-	//3.0 获取机器码
+	//3.0 获取机器唯一码
 	status = (hasp_status_t)GetUniMachineCode(strMachineCode);
 	if (status != HASP_STATUS_OK)
 	{
 		goto END;
 	}
 
-	//4.0 机器码加密
-	if (strMachineCode.length() < 16) //HL锁加密的数据最小长度为 16
+	//4.0 机器唯一码加密
+	if (strMachineCode.length() < 16) // HL锁加密的数据最小长度为 16
 		iMachineCodeLen = 16;
 	else
 		iMachineCodeLen = strMachineCode.length();
@@ -218,7 +220,7 @@ int  CSentinel::CheckRam()
 	memset(pMachineData, 0, iMachineCodeLen);
 	memcpy(pMachineData, strMachineCode.c_str(), strMachineCode.length());
 
-	//原始的【机器码】加密
+	// 原始的【机器唯一码】加密
 	status = hasp_encrypt(m_pChasp, pMachineData, iMachineCodeLen);
 	if (status != HASP_STATUS_OK)
 	{
@@ -237,14 +239,14 @@ int  CSentinel::CheckRam()
 
 	if (ix != HASP_RAM_LEN) 
 	{
-		//5.1 该HL锁已经使用过
+		// 5.1 该HL锁已经使用过
 		unsigned char	szSorNum[16] = {0};
 		unsigned char	szDesDecNum[16] = {0};
 		unsigned char	szDesEncNum[16] = {0};
-		int			    num			    = 0; //已经使用的机器数目
+		int			    num			    = 0; // 已经使用的机器数目
 
-		//加密后的【机器的数目】 0x0001-0x0010 16
-		memcpy(szSorNum, data+1, 16); //偏移1
+		// 加密后的【机器的数目】 0x0001-0x0010 16
+		memcpy(szSorNum, data+1, 16); // 偏移1
 
 		//5.11 解密【机器的数目】
 		status = (hasp_status_t)DecMachineNum(szSorNum, szDesDecNum, num);
@@ -252,7 +254,7 @@ int  CSentinel::CheckRam()
 		{
 			goto END;
 		}	
-		if (num < 1 || num > 5) //使用完毕
+        if (num < 1 || num > HASP_MAX_MACHINE_NUM) // 认为使用完毕
 		{
 			status = HASP_ERR_MACHINENUM;
 			goto END;
@@ -262,56 +264,55 @@ int  CSentinel::CheckRam()
 		int ix=0;
 		for ( ix=0; ix<num; ix++)
 		{
-			if (memcmp(pMachineData, data+17+15*ix, 15) == 0 ) //加密后的【机器的数目】17+ 15*x
+			if (memcmp(pMachineData, data+17+15*ix, 15) == 0 ) // 加密后的【机器的数目】17+ 15*x
 			{
 				break;
 			}
 		}
 		
-		//比较失败
+		// 比较失败
 		if (ix >= num)
 		{
-			if (num == 5) //使用完毕
+            if (num == HASP_MAX_MACHINE_NUM) //使用完毕
 			{
 				status = HASP_MACHINENUM_OUT_OF_BOUNDS;
 				goto END;
 			}
-			//新增一个机器码
+			// 新增一个机器唯一码
 			{
 				//【机器的数目】加密
-				szDesDecNum[3] += 1; //机器的数目加1 
+				szDesDecNum[3] += 1; // 机器的数目加1 
 				EncMachineNum(szDesDecNum, szDesEncNum);
 
-				//加密后的【机器的数目】与【机器码】写入HL锁中
-				memcpy(data+1, szDesEncNum, 16); //偏移1
-				memcpy(data+17+15*num, pMachineData, 15); //偏移17，认定15个字节做比较
+				// 加密后的【机器的数目】与【机器唯一码】写入HL锁中
+				memcpy(data+1, szDesEncNum, 16); // 偏移1
+				memcpy(data+17+15*num, pMachineData, 15); // 偏移17，认定15个字节做比较
 
 				//写入文件中
 				status = hasp_write(m_pChasp, HASP_FILEID_RW, 0, 112, data);
 			}
 		}
 	}
-	else
+	else //5.2 该HL锁第一次使用
 	{
-		//5.2 该HL锁第一次使用
 		unsigned char	szSorNum[16] = "\7q~0^x7{CfB%F\83";
 		unsigned char	szDesNum[16] = {0};
 
-		//原始【机器的数目】数据修改
+		// 原始【机器的数目】数据修改
 		for (int ix=0; ix<16; ix++)
 		{
 			szSorNum[ix] -= ix/5;
 		}
-		szSorNum[3] = '1'; //1字符表示使用了一个机器码
+		szSorNum[3] = '1'; // 1字符表示使用了一个机器码
 
 		//【机器的数目】加密
 		EncMachineNum(szSorNum, szDesNum);
 
-		//加密后的【机器的数目】与【机器码】写入HL锁中
-		memcpy(data+1, szDesNum, 16); //偏移1
-		memcpy(data+17, pMachineData, 15); //偏移17，认定15个字节做比较
+		// 加密后的【机器的数目】与【机器码】写入HL锁中
+		memcpy(data+1, szDesNum, 16); // 偏移1
+		memcpy(data+17, pMachineData, 15); // 偏移17，认定15个字节做比较
 
-		//写入文件中
+		// 写入文件中
 		status = hasp_write(m_pChasp, HASP_FILEID_RW, 0, 112, data);
 	}
 
@@ -330,10 +331,10 @@ int  CSentinel::GetPointNum()
 	return(m_pChannels);
 }
 
-//开发商代码的长度为 984 
+// 开发商代码的长度为 984 
 int  CSentinel::DecVendor()
 {	
-	unsigned char  key[]	= "~`Az7\0*=] 'e&,#BM:w>g-??1\1@cT{P5.#} \"rL;/*"; //加密的密钥 实际为32位	
+	unsigned char  key[]	= "~`Az7\0*=] 'e&,#BM:w>g-??1\1@cT{P5.#} \"rL;/*"; // 加密的密钥 实际为32位	
 	string   strSorData;   
 	unsigned char  szSorCode[984] = {0};
 
@@ -344,7 +345,7 @@ int  CSentinel::DecVendor()
 	szSorCode[983]  = 0x13; //最后一个字符
 
 	//2.0 解密
-	//考虑到字符串含有结束字符,不能强制赋值
+	// 考虑到字符串含有结束字符,不能强制赋值
 	for (int ix=0; ix<984; ix++)
 	{
 		strSorData+= szSorCode[ix];
@@ -363,6 +364,7 @@ int  CSentinel::DecVendor()
 	memset(m_pCode, 0, 984+1);
 	memcpy(m_pCode, strEnc.c_str(), 984);
 
+    //3.0 加上特定的值修改原有数据, 恢复数据
 	m_pCode[111] -= 1;
 	m_pCode[222] -= 5;
 	m_pCode[357] += 7;
@@ -410,14 +412,14 @@ int  CSentinel::GetHLInfo(string &strHLId,  string &strHLType)
 	//2.0 获取HL锁的ID号与类型
 	TiXmlDocument xmlDoc;	
 
-	//解析
+	// 解析
 	if (!xmlDoc.Parse(info, NULL, TIXML_ENCODING_UNKNOWN))
 	{
 		status = HASP_INV_HLID;
 		goto END;
 	}
 	
-	//获取根节点
+	// 获取根节点
 	const TiXmlElement* pRootElem = xmlDoc.RootElement();
 	if (NULL == pRootElem)
 	{
@@ -446,10 +448,11 @@ END:
 int  CSentinel::GetUniMachineCode(string &strCode)
 {
 	char	szMac[128] = {0};
-	char	szHD[128]  = {0};
+	char	szCpu[128]  = {0};
+    char	szBaseBoard[128] = { 0 };
 	string	strHLId;
 	string  strHLType;
-	string	strUniCode;	//机器码
+	string	strUniCode;	// 机器码
 	BOOL	flag		  = FALSE;
 
 	//1.0 MAC地址
@@ -459,12 +462,19 @@ int  CSentinel::GetUniMachineCode(string &strCode)
 		strUniCode.append(szMac);
 	}
 
-	//2.0 HD地址
-	flag = GetHDSerial(szHD, 128);
+	//2.0 Cpu序列号
+    flag = GetCpuByCmd(szCpu, 128);
 	if (flag)
 	{
-		strUniCode.append(szHD);
+        strUniCode.append(szCpu);
 	}
+
+    //3.0 主板序列号
+    flag = GetBaseBoardByCmd(szBaseBoard, 128);
+    if (flag)
+    {
+        strUniCode.append(szBaseBoard);
+    }
 
 	//3.0 HL锁的ID与Type
 	int hlRlt = GetHLInfo(strHLId, strHLType);
@@ -474,7 +484,7 @@ int  CSentinel::GetUniMachineCode(string &strCode)
 	}
 
 	strUniCode.append(strHLId);
-	strUniCode.append(strHLType);//此时长度为35左右
+	strUniCode.append(strHLType);// 此时长度为35左右
 
 	strCode = strUniCode;
 	
@@ -485,9 +495,8 @@ int  CSentinel::DecMachineNum(unsigned char szSorMachine[16], unsigned char szDe
 {
 	num	= -1;
 
-	unsigned char  key[]	= "0.&\v 5\0*>y`Qa'S\8/+$pL;|@zM8<?-a"; //加密的密钥 实际为16位
-	hasp_status_t  status	= HASP_STATUS_OK;
-
+    hasp_status_t  status = HASP_STATUS_OK;
+	unsigned char  key[]	= "0.&\v 5\0*>y`Qa'S\8/+$pL;|@zM8<?-a"; //加密的密钥 实际为16位 -- EncMachineNum一样
 	//对定义的密钥进行修改
 	for (int ix=0; ix<32; ix++)
 	{
@@ -496,11 +505,11 @@ int  CSentinel::DecMachineNum(unsigned char szSorMachine[16], unsigned char szDe
 
 	CDSA		   desCls(CDSA::BIT128, key); 
 
-	//AES 加密
+	// AES 解密
 	desCls.InvCipher(szSorMachine, szDesMachine);//解密的数据的长度为16
 
-	//第四个为目前使用的数目
-	if (isdigit(szDesMachine[3]) == 0)  //第三位索引号为实际使用的机器的数目
+	// 第四个为目前使用的数目
+	if (isdigit(szDesMachine[3]) == 0)  // 第三位索引号为实际使用的机器的数目
 	{
 		status = HASP_ERR_MACHINENUM;
 		goto END;
@@ -529,17 +538,16 @@ END:
 
 int  CSentinel::EncMachineNum(unsigned char  szSorMachine[16], unsigned char  szDesMachine[16])
 {
-	unsigned char  key[]	= "0.&\v 5\0*>y`Qa'S\8/+$pL;|@zM8<?-a"; //加密的密钥 16位
-	
-	//对定义的密钥进行修改
+	unsigned char  key[]	= "0.&\v 5\0*>y`Qa'S\8/+$pL;|@zM8<?-a"; // 加密的密钥 16位
+	// 对定义的密钥进行修改
 	for (int ix=0; ix<32; ix++)
 	{
 		key[ix] += ix/5;
 	}
 
-	CDSA		   desCls(CDSA::BIT128, key);	//加密的数据的长度为16
+	CDSA		   desCls(CDSA::BIT128, key);	// 加密的数据的长度为16
 
-	//AES 加密
+	// AES 加密
 	desCls.Cipher(szSorMachine, szDesMachine);
 	
 	return(HASP_STATUS_OK);

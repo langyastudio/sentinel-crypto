@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "HkfyCryptAPI.h"
+#include <HkfyCryptAPI.h>
 
 #pragma comment(lib, "HkfyCrypt.lib")
 

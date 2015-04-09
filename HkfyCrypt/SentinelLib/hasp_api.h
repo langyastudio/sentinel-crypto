@@ -502,7 +502,7 @@ enum hasp_error_codes
 
     HASP_NEXT_FREE_VALUES = 7001,
 
-	//自己新增的ErrorCode
+	//-----------------------------------------自己新增的ErrorCode-----------------------------------//
 	/* Error Machine Num */
 	HASP_ERR_MACHINENUM = 7002,
 
@@ -523,6 +523,13 @@ enum hasp_error_codes
 
 	/* Error HL ID */
 	HASP_INV_HLID = 7008,
+
+    /* Error ROM LEN */
+    HASP_INV_ROM_LEN = 7009,
+
+    /* Error RAM LEN */
+    HASP_INV_RAM_LEN = 7010,
+    //---------------------------------------------------------------------------------------------//
 };
 
 /**

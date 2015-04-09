@@ -14,12 +14,11 @@ class CSentinel
 {
 public:
 	CSentinel();
-	~CSentinel();
+	virtual ~CSentinel();
 
 public:
-	const char *GetErrorName(int errorCode);
-	
 	int  LogIn(unsigned long lFeatureId);
+    const char *GetErrorName(int errorCode);
 	int  LogOut();
 	
 #define HASP_ROM_LEN  112
@@ -30,16 +29,16 @@ public:
 	int  GetPointNum();
 
 private:
-	int  DecVendor();
+	int  DecVendor(); // 解码开发商代码
 
-	int  GetHLInfo(string &strHLId,  string &strHLType);
-	int  GetUniMachineCode(string &strCode);
-
-	int  DecMachineNum(unsigned char  szSorMachine[16], unsigned char  szDesMachine[16], int &num);
-	int  EncMachineNum(unsigned char  szSorMachine[16], unsigned char  szDesMachine[16]);
+	int  GetHLInfo(string &strHLId,  string &strHLType); // 获取加密狗信息
+	int  GetUniMachineCode(string &strCode); // 获取唯一机器码
+    
+	int  DecMachineNum(unsigned char  szSorMachine[16], unsigned char  szDesMachine[16], int &num); // 解码机器号
+	int  EncMachineNum(unsigned char  szSorMachine[16], unsigned char  szDesMachine[16]); // 编码机器号
 
 private:
-	hasp_handle_t	m_pChasp;
+	hasp_handle_t	 m_pChasp;
 	CErrorPrinter	*m_pError;	
 	unsigned char   *m_pCode;
 	unsigned char	 m_pChannels;

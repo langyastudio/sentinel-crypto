@@ -4,6 +4,7 @@
 
 #define  MD5_ENCRYPT_LEN	32+1	//文件的MD5的长度
 
+#pragma warning(once : 4267)
 
 //Ansi字符串转Unicode字符串
 wchar_t* Ansi2Unicode(const char* szAnsi)  
@@ -34,7 +35,7 @@ char* Unicode2Ansi(const wchar_t* wszString)
 		return(NULL);
 	}
 
-	int ansiLen = ::WideCharToMultiByte(CP_ACP, NULL, wszString, wcslen(wszString), NULL, 0, NULL, NULL);  
+    int ansiLen = ::WideCharToMultiByte(CP_ACP, NULL, wszString, wcslen(wszString), NULL, 0, NULL, NULL);
 	char* szAnsi = new char[ansiLen + 1];   
 	
 	// Unicode版对应的strlen是wcslen   

@@ -78,6 +78,12 @@
     <ClInclude Include="MacID.h">
       <Filter>Header Files\Method</Filter>
     </ClInclude>
+    <ClInclude Include="BaseBoard.h">
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuID.h">
+      <Filter>Header Files\Method</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -120,6 +126,12 @@
       <Filter>Source Files\Method</Filter>
     </ClCompile>
     <ClCompile Include="MacID.cpp">
+      <Filter>Source Files\Method</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseBoardID.cpp">
+      <Filter>Source Files\Method</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuID.cpp">
       <Filter>Source Files\Method</Filter>
     </ClCompile>
   </ItemGroup>

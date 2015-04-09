@@ -7,7 +7,7 @@
 
 
 //--------------------------------------------------------------------------
-//								´íÎóÂëÓ³Éä
+//								¼ÓÃÜ¹·´íÎóÂëÓ³Éä
 //--------------------------------------------------------------------------
 class CErrorPrinter
 {
@@ -18,10 +18,9 @@ public:
     const char* GetError(hasp_status_t status);
 	void PrintError(hasp_status_t status);
 
-    typedef std::map<hasp_status_t, const char*> StatusMap;
-
 private:
-    StatusMap errorMap;
+    typedef std::map<hasp_status_t, const char*> StatusMap;
+    StatusMap       m_errorMap;
 };
 
 #endif //!_AFXSTD_6B5BFA3D_3912_4277_957A_982D725AEFE3_INCLUDE_H_
