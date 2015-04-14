@@ -159,11 +159,7 @@ int CSentinel::CheckRom()
 
 	//7.0 采样的通道数 0x0020-0x0020 1 通道数
 	{		
-		m_pChannels = (*(data + 0x0020) - 'a');
-		if (0x000A != m_pChannels) // 有效的为10通道
-		{
-			m_pChannels = 0x0006;
-		}
+		m_pChannels = (*(data + 0x0020) - 'a');		
 	}
 
 END:
