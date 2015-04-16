@@ -41,7 +41,7 @@ private:
 	hasp_handle_t	 m_pChasp;
 	CErrorPrinter	*m_pError;	
 	unsigned char   *m_pCode;
-	unsigned char	 m_pChannels;
+	char	         m_pChannels;
 };
 
 
