@@ -25,6 +25,7 @@ public:
 #define HASP_RAM_LEN  112
 	int  CheckRom();
 	int  CheckRam();
+    int  ClearRam();
 
 	int  GetPointNum();
 

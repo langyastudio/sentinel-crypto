@@ -321,6 +321,36 @@ END:
 	return(status);
 }
 
+int  CSentinel::ClearRam()
+{
+    if (HASP_INVALID_HANDLE_VALUE == m_pChasp)
+    {
+        return(HASP_INV_PROGNUM_OPT);
+    }
+
+    hasp_size_t   size = 0; //内存的尺寸
+    hasp_status_t status = HASP_STATUS_OK;
+    unsigned char data[HASP_RAM_LEN] = { 0 };
+
+    //1.0 获取读写内存的尺寸，判断是否为 112
+    status = hasp_get_size(m_pChasp, HASP_FILEID_RW, &size);
+    if (status != HASP_STATUS_OK)
+    {
+        goto END;
+    }
+    if (size != HASP_RAM_LEN)
+    {
+        status = HASP_INV_RAM_LEN;
+        goto END;
+    }
+
+    //2.0 写入文件中
+    status = hasp_write(m_pChasp, HASP_FILEID_RW, 0, 112, data);
+
+END:
+    return(status);
+}
+
 // 采集的通道数
 int  CSentinel::GetPointNum()
 {

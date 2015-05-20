@@ -44,6 +44,7 @@ public:
 
 	int  CheckRom();
 	int  CheckRam();
+    int  ClearRam();
 
 	int  GetPointNum();
 

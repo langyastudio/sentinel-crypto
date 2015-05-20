@@ -74,6 +74,11 @@ int Ci_HKFY::CheckRam()
 	return(m_pSentinel->CheckRam());
 }
 
+int  Ci_HKFY::ClearRam()
+{
+    return(m_pSentinel->ClearRam());
+}
+
 int  Ci_HKFY::GetPointNum()
 {
 	return(m_pSentinel->GetPointNum());
